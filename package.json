@@ -1,0 +1,77 @@
+{
+  "name": "meracapital",
+  "version": "1.1.1",
+  "description": "",
+  "scripts": {
+    "start": "nodemon src/server.ts",
+    "start-prod": "node build/server.js",
+    "build": "tsc",
+    "dev": "concurrently \"nodemon\" \"nodemon -x tsoa spec\"",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rsbh/express-typescript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rsbh/express-typescript/issues"
+  },
+  "homepage": "https://github.com/rsbh/express-typescript#readme",
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.8",
+    "@types/express-fileupload": "^1.1.7",
+    "@types/faker": "^5.1.5",
+    "@types/jest": "^26.0.19",
+    "@types/jsonwebtoken": "^8.5.1",
+    "@types/morgan": "^1.9.1",
+    "@types/node": "^14.11.2",
+    "@types/swagger-ui-express": "^4.1.2",
+    "@types/yamljs": "^0.2.31",
+    "concurrently": "^5.3.0",
+    "eslint": "^7.30.0",
+    "faker": "^5.1.0",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.4",
+    "ts-jest": "^26.4.4"
+  },
+  "dependencies": {
+    "-": "0.0.1",
+    "@types/mailgun-js": "^0.22.11",
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "email-validator": "^2.0.4",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "form-data": "^4.0.0",
+    "formdata-node": "^3.5.4",
+    "jsonwebtoken": "^8.5.1",
+    "mailgun-js": "^0.22.0",
+    "mailgun.js": "^3.4.0",
+    "morgan": "^1.10.0",
+    "node-cache": "^5.1.2",
+    "pg": "^8.5.1",
+    "query-string": "^7.0.1",
+    "reflect-metadata": "^0.1.13",
+    "runtypes": "^6.3.0",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.1.6",
+    "ts-node": "^9.0.0",
+    "tsoa": "^3.3.0",
+    "typeorm": "^0.2.29",
+    "typescript": "^4.0.3",
+    "yamljs": "^0.3.0"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "ts",
+    "exec": "ts-node src/server.ts"
+  }
+}
