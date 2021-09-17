@@ -1,0 +1,138 @@
+openapi: 3.0.1
+info:
+  title: Meracapital
+  description: Meracapital Aplication
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 1.0.0
+servers:
+- url: http://localhost:7000/
+  description: Development server  
+# - url: https://api-stage.tasker.so/
+#   description: Stage server
+paths:
+  /api/auth:
+    post:
+      tags:
+      - Auth
+      description: Authorization
+      requestBody:
+        description: name and password
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                password:
+                  type: string
+        required: true
+      responses:
+        200:
+          description: auth
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  authorized:
+                    type: boolean
+                  token:
+                    type: string
+        400:
+          description: auth
+          content:
+            application/json:
+              schema:
+                type: object
+      x-codegen-request-body-name: data
+  /api/admin/clients:
+    get:
+      tags:
+      - Admin
+      description: Get all users
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+      security:
+      - Bearer: []
+  /api/admin/client/{id}:
+    get:
+      tags:
+      - Admin
+      description: Get user by Id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+      security:
+      - Bearer: []
+    patch:
+      tags:
+      - Admin
+      description: Edit Client by id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Client Data
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isSubscribed:
+                  type: boolean
+        required: false
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+      security:
+      - Bearer: []
+      x-codegen-request-body-name: data                                     
+components:
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header    

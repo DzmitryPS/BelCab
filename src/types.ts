@@ -4,10 +4,9 @@ export interface DefaultDocumentData {
 
   export interface UserData {
     id: number;
-    firstName?: string;
-    lastName?: string;
+    name?: string;
     address?: string;
     phoneNumber?: string;
     email: string;
-    isAdmin?: boolean;
+    isSubscribed?: boolean;
   }
