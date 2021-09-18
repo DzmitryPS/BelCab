@@ -2,11 +2,7 @@ import express from "express";
 import {Express} from "express";
 import bodyParser from "body-parser";
 import {ExpressRequest, Handler} from "./Handler";
-import YAML from "yamljs";
-import swaggerUi from "swagger-ui-express";
 import cors from "cors";
-
-const swaggerDocument = YAML.load('./openapi.yaml');
 
 export class WebServer {
     private readonly webServer: Express;
@@ -19,7 +15,6 @@ export class WebServer {
         }));
         this.webServer.use(express.json())
         this.webServer.use(express.static("public"))
-        this.webServer.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
     }
 
     addHandler(method: string, url: string, handler: Handler<ExpressRequest, void>): void {

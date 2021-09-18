@@ -5,7 +5,6 @@ dotenv.config();
 import { WebServer } from "./WebServer";
 import dbConfig from "./config/database";
 import { User } from "./models";
-import { getAllClientsHandler, getClientByIdHandler, updateClientByIdHandler } from "./router/admin.router";
 import { randomBytes } from "crypto";
 import { authorizationHandler } from "./router/auth.router";
 
@@ -15,9 +14,6 @@ const jwtSecret = randomBytes(32).toString("hex");
 
 server.addHandler("POST", "/api/auth", authorizationHandler(jwtSecret, dataBaseService.users));
 
-server.addHandler("GET", "/api/admin/clients", getAllClientsHandler(jwtSecret, dataBaseService.users));
-server.addHandler("GET", "/api/admin/client/:clientId", getClientByIdHandler(jwtSecret, dataBaseService));
-server.addHandler("PATCH", "/api/admin/client/:clientId", updateClientByIdHandler(jwtSecret, dataBaseService));
 
 async function initDedaults(
   users: LazyRepository<User>
@@ -37,9 +33,9 @@ async function initDedaults(
 (async () => {
     await dataBaseService.connect();
     await initDedaults(dataBaseService.users);
-    server.startServer(parseInt(<string>process.env.PORT) || 7000);
+    server.startServer(parseInt(<string>process.env.PORT) || 5000);
     console.info(
-      "Server started on port " + (parseInt(<string>process.env.PORT) || 7000)
+      "Server started on port " + (parseInt(<string>process.env.PORT) || 5000)
     );
   })().catch((error) => {
     console.error(error);
