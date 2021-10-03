@@ -2,9 +2,10 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
-    OneToOne,
-    JoinColumn
+    OneToMany,
+    ManyToMany
 } from "typeorm";
+import { SubCategory } from ".";
 import { ProductData } from "../types";
 import { Size } from "./size";
 
@@ -15,6 +16,9 @@ export class Product {
 
     @Column({ nullable: false })
     name!: string;
+
+    @ManyToMany(() => SubCategory, subcategory => subcategory.products)
+    subCategories!: SubCategory[];
 
     @Column({ nullable: true })
     image?: string;
@@ -34,20 +38,20 @@ export class Product {
     @Column({ nullable: false })
     price!: number;
 
-    @OneToOne(() => Size)
-    @JoinColumn()
-    size!: Size;
+    @OneToMany(() => Size, size => size.product, {nullable: true})
+    size?: Size[];
 
     getDataForFront(): ProductData {
         return {
             id: this.id,
             name: this.name,
+            subCategories: this.subCategories,
             image: this.image,
             naznachenye: this.naznachenye,
             construcya: this.construcya,
             th: this.th,
             expluatation: this.expluatation,
-            size: this.size.getDataForFront()
+            size: this.size?.map((item) => item.getDataForFront())
         };
     }
 }

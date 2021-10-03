@@ -2,13 +2,18 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  ManyToOne,
 } from "typeorm";
+import { Product } from ".";
 import { SizeData } from "../types";
 
 @Entity()
 export class Size {
   @PrimaryGeneratedColumn()
   id!: number;
+
+  @ManyToOne(() => Product, product => product.size)
+  product!: Product
 
   @Column({ nullable: false })
   number!: number;
@@ -19,18 +24,19 @@ export class Size {
   @Column({ nullable: false })
   number_of_zyl!: number;
 
-  @Column({ nullable: false })
-  max_diametr!: number;
+  @Column({ nullable: true })
+  max_diametr?: number;
 
-  @Column({ nullable: false })
-  massa!: number;
+  @Column({ nullable: true })
+  massa?: number;
 
-  @Column({ nullable: false })
-  konstrukcya_zyli!: string;
+  @Column({ nullable: true })
+  konstrukcya_zyli?: string;
 
   getDataForFront(): SizeData {
     return {
       id: this.id,
+      product: this.product,
       number: this.number,
       sechenye_zyl: this.sechenye_zyl,
       number_of_zyl: this.number_of_zyl,

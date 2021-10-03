@@ -21,7 +21,7 @@ export class SubCategory {
     @ManyToOne(() => Category, category => category.subCategories)
     category!: Category;
 
-    @ManyToMany(() => Product)
+    @ManyToMany(() => Product, product => product.subCategories, { onDelete: "CASCADE" })
     @JoinTable()
     products?: Product[]
 
@@ -30,7 +30,7 @@ export class SubCategory {
             id: this.id,
             category: this.category,
             products: this.products
-        
-    };
+
+        };
+    }
 }
-  }

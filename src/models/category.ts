@@ -15,7 +15,7 @@ import { SubCategory } from "./subCategory";
     @Column({ nullable: false })
     name!: string;
 
-    @OneToMany(() => SubCategory, subCategory => subCategory.category)
+    @OneToMany(() => SubCategory, subCategory => subCategory.category, {onDelete: "SET NULL"})
     subCategories!: SubCategory[];
   
     getDataForFront(): CategoryData {
