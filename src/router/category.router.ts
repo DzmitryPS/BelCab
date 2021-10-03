@@ -8,6 +8,7 @@ import {
     verify,
     ApiRequest,
     ParsedHttpAndSession,
+    ParsedHttpRequest,
 } from "../Handler";
 import {
     Record,
@@ -93,7 +94,7 @@ export function deleteCategoryHandler(
 }
 
 export async function getAllCategoriesRequest(
-    request: ParsedHttpAndSession,
+    request: ParsedHttpRequest,
     dataBaseService: DataBaseService
 ): Promise<Category[]> {
     const categories = await dataBaseService.categories()
@@ -104,7 +105,6 @@ export async function getAllCategoriesRequest(
 }
 
 export function getAllCategoriesHandler(
-    jwtSecret: Secret,
     dataBaseService: DataBaseService
 ): Handler<ExpressRequest, void> {
     return async (request) =>
@@ -112,7 +112,7 @@ export function getAllCategoriesHandler(
             request,
             async (localRequest) =>
                 await getAllCategoriesRequest(
-                    authorized(session(jwtSecret, parseHttp(localRequest)), true),
+                    parseHttp(localRequest),
                     dataBaseService
                 )
         );

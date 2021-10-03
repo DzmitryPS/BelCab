@@ -11,6 +11,7 @@ import {
     verify,
     ApiRequest,
     ParsedHttpAndSession,
+    ParsedHttpRequest,
 } from "../Handler";
 import {
     authorized,
@@ -99,7 +100,7 @@ export function deleteSubCategoryHandler(
 }
 
 export async function getSubCategoryByIdRequest(
-    request: ParsedHttpAndSession,
+    request: ParsedHttpRequest,
     dataBaseService: DataBaseService
 ): Promise<SubCategory> {
     const dataToReturn = await dataBaseService.subCategories()
@@ -114,7 +115,6 @@ export async function getSubCategoryByIdRequest(
 }
 
 export function getSubCategoryByIdHandler(
-    jwtSecret: Secret,
     dataBaseService: DataBaseService
 ): Handler<ExpressRequest, void> {
     return async (request) =>
@@ -122,7 +122,7 @@ export function getSubCategoryByIdHandler(
             request,
             async (localRequest) =>
                 await getSubCategoryByIdRequest(
-                    authorized(session(jwtSecret, parseHttp(localRequest)), true),
+                    parseHttp(localRequest),
                     dataBaseService
                 )
         );
