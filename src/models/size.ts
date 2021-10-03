@@ -12,7 +12,7 @@ export class Size {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @ManyToOne(() => Product, product => product.size)
+  @ManyToOne(() => Product, product => product.size, {onDelete: "CASCADE"})
   product!: Product
 
   @Column({ nullable: false })

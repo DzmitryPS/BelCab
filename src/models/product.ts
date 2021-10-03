@@ -38,7 +38,7 @@ export class Product {
     @Column({ nullable: false })
     price!: number;
 
-    @OneToMany(() => Size, size => size.product, {nullable: true})
+    @OneToMany(() => Size, size => size.product, {nullable: true, onDelete: "CASCADE"})
     size?: Size[];
 
     getDataForFront(): ProductData {

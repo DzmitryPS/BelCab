@@ -9,7 +9,7 @@ import { randomBytes } from "crypto";
 import { authorizationHandler } from "./router/auth.router";
 import { createCategoryHandler, deleteCategoryHandler, getAllCategoriesHandler } from "./router/category.router";
 import { createSubCategoryHandler, deleteSubCategoryHandler, getSubCategoryByIdHandler } from "./router/subCategory.router";
-import { createProductHandler, getProductByIdHandler } from "./router/product.router";
+import { createProductHandler, deleteProductByIdHandler, getProductByIdHandler } from "./router/product.router";
 
 const server = new WebServer();
 const dataBaseService = new DataBaseService(dbConfig);
@@ -27,6 +27,7 @@ server.addHandler("DELETE", "/api/admin/subcategory/:id", deleteSubCategoryHandl
 server.addHandler("GET", "/api/subcategory/:id", getSubCategoryByIdHandler(dataBaseService));
 
 server.addHandler("POST", "/api/admin/product", createProductHandler(jwtSecret, dataBaseService));
+server.addHandler("DELETE", "/api/admin/product/:id", deleteProductByIdHandler(jwtSecret, dataBaseService))
 server.addHandler("GET", "/api/product/:id", getProductByIdHandler(dataBaseService));
 
 async function initDedaults(

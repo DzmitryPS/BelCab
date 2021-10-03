@@ -24,7 +24,8 @@ import {
 } from "../extensions/session";
 import { ProductData } from "../types";
 import { RequestHandlingError } from "../RequestHandlingError";
-import { Product } from "src/models";
+import { Product } from "../models";
+import { DeleteResult } from "typeorm";
 
 const singleSize = Record({
     number: String,
@@ -136,4 +137,36 @@ export function getProductByIdHandler(
                     dataBaseService
                 )
         );
+}
+
+export async function deleteProductByIdRequest(
+    request: ParsedHttpAndSession,
+    dataBaseService: DataBaseService   
+): Promise<DeleteResult> {
+const product = await dataBaseService.products().findOne({id: Number(request.params.id)});
+ if (!product){
+    throw new RequestHandlingError("Product by this id not found", 404);
+ }
+ return await dataBaseService
+ .products()
+ .createQueryBuilder()
+ .delete()
+ .from(Product)
+ .where("id = :id", {id: Number(request.params.id)})
+ .execute()
+}
+
+export function deleteProductByIdHandler(
+    jwtSecret: Secret,
+    dataBaseService: DataBaseService
+): Handler<ExpressRequest, void> {
+    return async (request) =>
+    api(
+        request,
+        async (localRequest) =>
+            await deleteProductByIdRequest(
+                authorized(session(jwtSecret, parseHttp(localRequest)), true),
+                dataBaseService
+            )
+    );
 }
